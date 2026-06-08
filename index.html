@@ -323,7 +323,7 @@
     function openAuthModal(tab) { switchTab(tab); document.getElementById('auth-modal').classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    function switchTab(tab) {
+    function switchTab(tab) { 
       document.getElementById('tab-login').classList.toggle('active', tab === 'login');
       document.getElementById('tab-register').classList.toggle('active', tab === 'register');
       document.getElementById('tab-login-btn').classList.toggle('active', tab === 'login');
