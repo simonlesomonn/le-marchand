@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merci — Le Marchand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #1a0a2e; font-family: 'Cormorant Garamond', serif; padding: 40px 20px; }
+    .bg { position: fixed; inset: 0; z-index: 0; }
+    .bg-base { position: absolute; inset: 0; background: radial-gradient(ellipse 120% 80% at 50% 0%, #3b1c6e 0%, #1a0a2e 55%, #0d0518 100%); }
+    .bg-glow { position: absolute; width: 60vw; height: 60vw; border-radius: 50%; background: radial-gradient(circle, rgba(120,60,220,0.28) 0%, transparent 70%); top: -10vw; left: 20vw; filter: blur(40px); }
+    .card { position: relative; z-index: 10; background: linear-gradient(145deg, #1e0e3a, #140828); border: 1px solid rgba(200,150,255,0.25); border-radius: 24px; padding: 50px 44px; max-width: 480px; width: 100%; text-align: center; }
+    .icon { font-size: 3rem; margin-bottom: 20px; }
+    h1 { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 0.2em; color: rgba(220,190,255,0.95); margin-bottom: 10px; }
+    .subtitle { font-size: 1rem; color: rgba(180,140,255,0.55); letter-spacing: 0.1em; margin-bottom: 32px; }
+    .code-box { background: rgba(120,60,255,0.12); border: 1px solid rgba(180,100,255,0.35); border-radius: 14px; padding: 24px 20px; margin-bottom: 28px; }
+    .code-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(200,150,255,0.5); margin-bottom: 12px; }
+    .code-value { font-family: 'Courier New', monospace; font-size: 1.6rem; color: #e8d5ff; letter-spacing: 0.18em; word-break: break-all; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(200,150,255,0.15); }
+    .btn-copy { margin-top: 14px; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; padding: 8px 22px; border-radius: 20px; background: rgba(150,80,255,0.25); color: rgba(220,190,255,0.9); border: 1px solid rgba(180,100,255,0.4); cursor: pointer; transition: all 0.2s; }
+    .btn-copy:hover { background: rgba(150,80,255,0.4); }
+    .btn-home { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.18em; padding: 11px 28px; border-radius: 20px; background: transparent; color: rgba(200,150,255,0.7); border: 1px solid rgba(200,150,255,0.3); cursor: pointer; text-decoration: none; transition: all 0.2s; }
+    .btn-home:hover { background: rgba(200,150,255,0.1); }
+    .loading { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(200,150,255,0.4); padding: 20px 0; }
+    .error-msg { color: #f08080; font-size: 0.9rem; letter-spacing: 0.08em; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="bg"><div class="bg-base"></div><div class="bg-glow"></div></div>
+
+  <div class="card">
+    <div class="icon">✦</div>
+    <h1>Paiement confirmé</h1>
+    <p class="subtitle">Merci pour votre achat</p>
+
+    <div id="content"><div class="loading">Récupération de votre code...</div></div>
+
+    <a href="/" class="btn-home">← Retour à la boutique</a>
+  </div>
+
+  <script>
+    async function fetchCode() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+      const content = document.getElementById('content');
+
+      if (!sessionId) {
+        content.innerHTML = '<p class="error-msg">Session introuvable.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/get-code', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId })
+        });
+        const data = await res.json();
+
+        if (!res.ok || data.error) {
+          content.innerHTML = `<p class="error-msg">${data.error || 'Erreur lors de la récupération du code.'}</p>`;
+          return;
+        }
+
+        content.innerHTML = `
+          <div class="code-box">
+            <div class="code-label">Votre code d'accès</div>
+            <div class="code-value" id="the-code">${data.code}</div>
+            <button class="btn-copy" onclick="copyCode()">Copier le code</button>
+          </div>`;
+      } catch(e) {
+        content.innerHTML = '<p class="error-msg">Erreur réseau. Rechargez la page.</p>';
+      }
+    }
+
+    function copyCode() {
+      const code = document.getElementById('the-code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.btn-copy');
+        btn.textContent = '✓ Copié !';
+        setTimeout(() => btn.textContent = 'Copier le code', 2000);
+      });
+    }
+
+    fetchCode();
+  </script>
+</body>
+</html>
