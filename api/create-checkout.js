@@ -1,25 +1,28 @@
 const Stripe = require('stripe');
+const { createClient } = require('@supabase/supabase-js');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const SUPA_URL = process.env.SUPA_URL;
-const SUPA_KEY = process.env.SUPA_KEY;
+const supabase = createClient(process.env.SUPA_URL, process.env.SUPA_SERVICE_KEY);
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST') return res.status(405).end();
 
   try {
     const { productId, productName, price, username } = req.body;
 
-    // Vérifier qu'il reste des codes disponibles
-    const codesRes = await fetch(
-      `${SUPA_URL}/rest/v1/codes?product_id=eq.${productId}&used=eq.false&select=id&limit=1`,
-      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
-    );
-    const codes = await codesRes.json();
+    // Vérifier qu'il reste des codes disponibles (via service role)
+    const { data: codes, error } = await supabase
+      .from('codes')
+      .select('id')
+      .eq('product_id', productId)
+      .eq('used', false)
+      .limit(1);
+
+    if (error) return res.status(500).json({ error: 'Erreur base de données.' });
     if (!codes.length) return res.status(400).json({ error: 'Plus de codes disponibles pour ce produit.' });
 
     const session = await stripe.checkout.sessions.create({
