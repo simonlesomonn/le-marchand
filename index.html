@@ -8,8 +8,6 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 6vh 4vw 6vh; background-color: #1a0a2e; overflow-x: hidden; position: relative; font-family: 'Cormorant Garamond', serif; }
-
-    /* BG */
     .bg { position: fixed; inset: 0; z-index: 0; }
     .bg-base { position: absolute; inset: 0; background: radial-gradient(ellipse 120% 80% at 50% 0%, #3b1c6e 0%, #1a0a2e 55%, #0d0518 100%); }
     .bg-glow-left { position: absolute; width: 60vw; height: 60vw; border-radius: 50%; background: radial-gradient(circle, rgba(120,60,220,0.28) 0%, transparent 70%); top: -10vw; left: -15vw; filter: blur(40px); }
@@ -20,11 +18,10 @@
     .particle { position: absolute; border-radius: 50%; background: rgba(200,150,255,0.6); animation: float linear infinite; }
     @keyframes float { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 0.5; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
 
-    /* NAV */
     .navbar { position: relative; z-index: 20; width: 100%; max-width: 900px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; gap: 12px; }
     .btn-nav { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.12em; padding: 8px 20px; border-radius: 20px; cursor: pointer; border: none; transition: all 0.25s ease; }
     .btn-login { background: transparent; color: rgba(200,150,255,0.8); border: 1px solid rgba(200,150,255,0.35); }
-    .btn-login:hover { background: rgba(200,150,255,0.1); border-color: rgba(200,150,255,0.7); }
+    .btn-login:hover { background: rgba(200,150,255,0.1); }
     .btn-register { background: rgba(150,80,255,0.25); color: rgba(230,200,255,0.95); border: 1px solid rgba(180,100,255,0.45); }
     .btn-register:hover { background: rgba(150,80,255,0.4); }
     .btn-logout { background: rgba(220,60,60,0.15); color: #f08080; border: 1px solid rgba(220,60,60,0.3); font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
@@ -33,10 +30,8 @@
     .btn-admin-panel:hover { background: rgba(255,180,0,0.25); }
     .user-greeting { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(200,160,255,0.7); letter-spacing: 0.1em; }
     .user-greeting span { color: rgba(230,200,255,0.95); font-weight: 600; }
-    .admin-crown { font-size: 0.85rem; margin-right: 4px; }
     .badge-admin-nav { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; background: rgba(255,180,0,0.18); color: #ffd566; border: 1px solid rgba(255,180,0,0.4); padding: 2px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
 
-    /* HEADER */
     .header { position: relative; z-index: 10; text-align: center; margin-bottom: 50px; }
     .ornement { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 18px; opacity: 0; animation: fadeDown 1s ease 0.3s forwards; }
     .ornement-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,255,0.7), transparent); }
@@ -46,31 +41,33 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* GRILLE */
     .products-grid { position: relative; z-index: 10; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; width: 100%; max-width: 900px; opacity: 0; animation: fadeUp 1s ease 1s forwards; }
     .product-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(200,150,255,0.18); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; }
     .product-card:hover { transform: translateY(-4px); border-color: rgba(200,150,255,0.4); box-shadow: 0 12px 40px rgba(150,80,255,0.15); }
     .product-img-wrap { width: 100%; aspect-ratio: 4/3; overflow: hidden; background: rgba(80,40,140,0.3); display: flex; align-items: center; justify-content: center; position: relative; }
     .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .lock-overlay { position: absolute; inset: 0; background: rgba(10,4,24,0.72); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; backdrop-filter: blur(3px); }
-    .lock-overlay svg { opacity: 0.9; }
     .lock-overlay span { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(200,150,255,0.7); }
     .product-card.unlocked .lock-overlay { display: none; }
-    .product-info { padding: 16px 20px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .product-info { padding: 14px 20px 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .product-name { font-family: 'Cinzel', serif; font-weight: 400; font-size: clamp(0.85rem, 1.5vw, 1rem); color: rgba(230,210,255,0.85); letter-spacing: 0.08em; }
     .badge { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
     .badge-stock { background: rgba(60,200,120,0.15); color: #6ee89b; border: 1px solid rgba(60,200,120,0.35); }
     .badge-hors-stock { background: rgba(220,60,60,0.15); color: #f08080; border: 1px solid rgba(220,60,60,0.3); }
     .badge-qty { background: rgba(120,80,255,0.15); color: rgba(200,170,255,0.85); border: 1px solid rgba(160,100,255,0.3); font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
+    .product-footer { padding: 10px 20px 16px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(200,150,255,0.07); }
+    .product-price { font-family: 'Cinzel', serif; font-size: 1.05rem; color: rgba(220,190,255,0.9); letter-spacing: 0.08em; }
+    .btn-buy { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.18em; padding: 8px 18px; border-radius: 20px; background: linear-gradient(135deg, rgba(130,60,220,0.6), rgba(180,80,255,0.4)); color: rgba(240,220,255,0.95); border: 1px solid rgba(180,100,255,0.4); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-buy:hover { background: linear-gradient(135deg, rgba(150,80,240,0.8), rgba(200,100,255,0.6)); box-shadow: 0 0 18px rgba(160,80,255,0.3); }
+    .btn-buy:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* MODAL BASE */
     .modal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(5,2,15,0.82); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal { background: linear-gradient(145deg, #1e0e3a, #140828); border: 1px solid rgba(200,150,255,0.25); border-radius: 20px; padding: 40px 36px; width: 90%; max-width: 400px; transform: translateY(20px) scale(0.97); transition: transform 0.3s ease; position: relative; }
     .modal-overlay.active .modal { transform: translateY(0) scale(1); }
-    .modal-close { position: absolute; top: 16px; right: 18px; background: none; border: none; cursor: pointer; color: rgba(200,150,255,0.5); font-size: 1.4rem; line-height: 1; transition: color 0.2s; }
+    .modal-close { position: absolute; top: 16px; right: 18px; background: none; border: none; cursor: pointer; color: rgba(200,150,255,0.5); font-size: 1.4rem; line-height: 1; }
     .modal-close:hover { color: rgba(200,150,255,0.9); }
-    .modal-tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 1px solid rgba(200,150,255,0.15); }
+    .modal-tabs { display: flex; margin-bottom: 28px; border-bottom: 1px solid rgba(200,150,255,0.15); }
     .tab-btn { flex: 1; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.15em; padding: 10px; background: none; border: none; color: rgba(180,130,255,0.45); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
     .tab-btn.active { color: rgba(220,180,255,0.95); border-bottom-color: rgba(180,100,255,0.8); }
     .tab-content { display: none; }
@@ -88,54 +85,43 @@
     .msg.error { color: #f08080; }
     .msg.success { color: #6ee89b; }
 
-    /* MODAL PRODUIT */
-    .product-modal-content { text-align: center; }
-    .product-modal-img { width: 100%; max-height: 180px; object-fit: contain; border-radius: 10px; margin-bottom: 18px; background: rgba(80,40,140,0.2); padding: 10px; }
-    .product-modal-name { font-family: 'Cinzel', serif; font-size: 1.3rem; color: rgba(220,190,255,0.95); letter-spacing: 0.15em; margin-bottom: 8px; }
-    .product-modal-status { margin-top: 10px; }
-    .product-modal-desc { font-size: 1rem; color: rgba(180,140,255,0.6); letter-spacing: 0.08em; margin-top: 14px; line-height: 1.6; }
-
-    /* MODAL ADMIN */
-    .admin-modal .modal { max-width: 620px; }
+    /* ADMIN */
     .admin-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,180,0,0.2); }
     .admin-crown-big { font-size: 1.8rem; }
     .admin-title { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.18em; color: #ffd566; }
     .admin-subtitle { font-size: 0.82rem; letter-spacing: 0.1em; color: rgba(255,200,80,0.5); margin-top: 2px; }
-
     .admin-section-title { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.22em; color: rgba(255,180,0,0.55); text-transform: uppercase; margin-bottom: 14px; margin-top: 24px; }
-
-    /* TABLE PRODUITS ADMIN */
-    .admin-product-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(200,150,255,0.1); border-radius: 12px; margin-bottom: 10px; }
-    .admin-product-thumb { width: 48px; height: 36px; object-fit: cover; border-radius: 6px; background: rgba(80,40,140,0.3); flex-shrink: 0; }
-    .admin-product-name { font-family: 'Cinzel', serif; font-size: 0.82rem; color: rgba(220,190,255,0.85); letter-spacing: 0.08em; flex: 1; }
-    .toggle-btn { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.12em; padding: 5px 14px; border-radius: 20px; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
+    .admin-product-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(200,150,255,0.1); border-radius: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+    .admin-product-thumb { width: 48px; height: 36px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    .admin-product-name { font-family: 'Cinzel', serif; font-size: 0.82rem; color: rgba(220,190,255,0.85); letter-spacing: 0.08em; flex: 1; min-width: 80px; }
+    .toggle-btn { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 5px 12px; border-radius: 20px; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
     .toggle-btn.is-stock { background: rgba(220,60,60,0.15); color: #f08080; border: 1px solid rgba(220,60,60,0.3); }
-    .toggle-btn.is-stock:hover { background: rgba(220,60,60,0.3); }
     .toggle-btn.is-hors { background: rgba(60,200,120,0.15); color: #6ee89b; border: 1px solid rgba(60,200,120,0.35); }
-    .toggle-btn.is-hors:hover { background: rgba(60,200,120,0.3); }
-
-    /* LISTE UTILISATEURS */
+    .admin-input { background: rgba(255,255,255,0.06); border: 1px solid rgba(200,150,255,0.2); border-radius: 8px; padding: 5px 8px; color: rgba(220,190,255,0.9); font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; outline: none; text-align: center; }
     .user-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(200,150,255,0.08); border-radius: 10px; margin-bottom: 8px; }
     .user-row-name { font-family: 'Cinzel', serif; font-size: 0.8rem; color: rgba(200,170,255,0.75); letter-spacing: 0.1em; }
-    .btn-delete-user { background: rgba(220,60,60,0.12); color: #f08080; border: 1px solid rgba(220,60,60,0.25); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
+    .btn-delete-user { background: rgba(220,60,60,0.12); color: #f08080; border: 1px solid rgba(220,60,60,0.25); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 10px; cursor: pointer; }
     .btn-delete-user:hover { background: rgba(220,60,60,0.28); }
     .no-users { font-size: 0.85rem; color: rgba(180,140,255,0.4); letter-spacing: 0.1em; text-align: center; padding: 12px 0; }
+    .admin-save-msg { font-size: 0.82rem; letter-spacing: 0.1em; text-align: center; margin-top: 14px; min-height: 18px; }
+    .loading-bar { text-align: center; padding: 40px; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(200,150,255,0.4); }
 
-    .admin-save-msg { font-size: 0.82rem; letter-spacing: 0.1em; color: #6ee89b; text-align: center; margin-top: 14px; min-height: 18px; }
+    /* CODES SECTION */
+    .codes-list { margin-top: 8px; }
+    .code-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .code-row input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(200,150,255,0.15); border-radius: 8px; padding: 6px 10px; color: rgba(220,190,255,0.8); font-family: 'Courier New', monospace; font-size: 0.85rem; outline: none; }
+    .code-used { color: rgba(180,140,255,0.3); font-size: 0.65rem; letter-spacing: 0.1em; font-family: 'Cinzel', serif; white-space: nowrap; }
+    .btn-add-code { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; padding: 6px 14px; border-radius: 10px; background: rgba(60,200,120,0.12); color: #6ee89b; border: 1px solid rgba(60,200,120,0.3); cursor: pointer; margin-top: 6px; }
+    .btn-add-code:hover { background: rgba(60,200,120,0.25); }
 
     .bottom-light { position: fixed; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, rgba(180,80,255,0.6) 30%, rgba(220,150,255,0.9) 50%, rgba(180,80,255,0.6) 70%, transparent 100%); z-index: 5; }
     @media (max-width: 600px) { .products-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
+  <div class="bg"><div class="bg-base"></div><div class="bg-glow-left"></div><div class="bg-glow-right"></div><div class="bg-glow-center"></div><div class="bg-grid"></div><div class="particles" id="particles"></div></div>
 
-  <div class="bg">
-    <div class="bg-base"></div><div class="bg-glow-left"></div><div class="bg-glow-right"></div><div class="bg-glow-center"></div><div class="bg-grid"></div>
-    <div class="particles" id="particles"></div>
-  </div>
-
-  <!-- NAV -->
-  <div class="navbar" id="navbar">
+  <div class="navbar">
     <div id="nav-guest" style="display:flex;gap:12px;">
       <button class="btn-nav btn-login" onclick="openAuthModal('login')">Connexion</button>
       <button class="btn-nav btn-register" onclick="openAuthModal('register')">Créer un compte</button>
@@ -147,14 +133,13 @@
     </div>
   </div>
 
-  <!-- TITRE -->
   <div class="header">
     <div class="ornement"><div class="ornement-line"></div><div class="ornement-diamond"></div><div class="ornement-line"></div></div>
     <h1>Le Marchand</h1>
     <div class="ornement ornement-bas"><div class="ornement-line"></div><div class="ornement-diamond"></div><div class="ornement-line"></div></div>
   </div>
 
-  <div class="products-grid" id="grid"></div>
+  <div class="products-grid" id="grid"><div class="loading-bar" style="grid-column:1/-1;">Chargement...</div></div>
   <div class="bottom-light"></div>
 
   <!-- MODAL AUTH -->
@@ -167,352 +152,289 @@
       </div>
       <div class="tab-content active" id="tab-login">
         <h2>Identifiez-vous</h2>
-        <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="login-user" placeholder="Votre pseudo" /></div>
+        <div class="form-group"><label>Pseudo</label><input type="text" id="login-user" placeholder="Votre pseudo" /></div>
         <div class="form-group"><label>Mot de passe</label><input type="password" id="login-pass" placeholder="••••••••" /></div>
         <button class="btn-submit" onclick="doLogin()">Se connecter</button>
         <p class="msg" id="login-msg"></p>
       </div>
       <div class="tab-content" id="tab-register">
         <h2>Créer un compte</h2>
-        <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="reg-user" placeholder="Choisir un pseudo" /></div>
+        <div class="form-group"><label>Pseudo</label><input type="text" id="reg-user" placeholder="Choisir un pseudo" /></div>
         <div class="form-group"><label>Mot de passe</label><input type="password" id="reg-pass" placeholder="••••••••" /></div>
-        <div class="form-group"><label>Confirmer le mot de passe</label><input type="password" id="reg-pass2" placeholder="••••••••" /></div>
+        <div class="form-group"><label>Confirmer</label><input type="password" id="reg-pass2" placeholder="••••••••" /></div>
         <button class="btn-submit" onclick="doRegister()">Créer le compte</button>
         <p class="msg" id="register-msg"></p>
       </div>
     </div>
   </div>
 
-  <!-- MODAL PRODUIT -->
-  <div class="modal-overlay" id="product-modal">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal('product-modal')">✕</button>
-      <div class="product-modal-content">
-        <img class="product-modal-img" id="pm-img" src="" alt="" />
-        <div class="product-modal-name" id="pm-name"></div>
-        <div class="product-modal-status" id="pm-status"></div>
-        <p class="product-modal-desc" id="pm-desc"></p>
-        <p id="pm-qty" style="font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.18em;color:rgba(160,120,255,0.55);margin-top:10px;"></p>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL ADMIN -->
-  <div class="modal-overlay admin-modal" id="admin-modal">
-    <div class="modal" style="max-width:620px; max-height:85vh; overflow-y:auto;">
+  <div class="modal-overlay" id="admin-modal">
+    <div class="modal" style="max-width:660px;max-height:88vh;overflow-y:auto;">
       <button class="modal-close" onclick="closeModal('admin-modal')">✕</button>
-
       <div class="admin-header">
         <div class="admin-crown-big">👑</div>
-        <div>
-          <div class="admin-title">Dashboard Admin</div>
-          <div class="admin-subtitle">Le Marchand — Panneau de contrôle</div>
-        </div>
+        <div><div class="admin-title">Dashboard Admin</div><div class="admin-subtitle">Le Marchand — Produits, codes & utilisateurs</div></div>
       </div>
 
-      <!-- GESTION PRODUITS -->
-      <div class="admin-section-title">⬡ Gestion des produits</div>
+      <div class="admin-section-title">⬡ Produits & codes</div>
       <div id="admin-products-list"></div>
 
-      <!-- AJOUTER PRODUIT -->
       <div class="admin-section-title" style="margin-top:28px;">⬡ Ajouter un produit</div>
       <div class="form-group"><label>Nom</label><input type="text" id="new-name" placeholder="Nom du produit" /></div>
-      <div class="form-group"><label>URL de l'image</label><input type="text" id="new-img" placeholder="https://..." /></div>
+      <div class="form-group"><label>URL image</label><input type="text" id="new-img" placeholder="https://..." /></div>
       <div class="form-group"><label>Description</label><input type="text" id="new-desc" placeholder="Courte description..." /></div>
-      <div class="form-group"><label>Statut</label>
-        <select id="new-status">
-          <option value="stock">En stock</option>
-          <option value="hors-stock">Hors stock</option>
-        </select>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group"><label>Statut</label><select id="new-status"><option value="stock">En stock</option><option value="hors-stock">Hors stock</option></select></div>
+        <div class="form-group"><label>Prix (€)</label><input type="number" id="new-price" placeholder="9.99" min="0" step="0.01" /></div>
       </div>
-      <div class="form-group"><label>Quantité en stock</label><input type="number" id="new-qty" placeholder="Ex: 10" min="0" /></div>
       <button class="btn-submit" style="background:linear-gradient(135deg,rgba(255,160,0,0.35),rgba(255,200,50,0.2));border-color:rgba(255,180,0,0.4);color:#ffd566;" onclick="addProduct()">Ajouter le produit</button>
 
-      <!-- UTILISATEURS -->
       <div class="admin-section-title" style="margin-top:32px;">⬡ Comptes utilisateurs</div>
       <div id="admin-users-list"></div>
-
       <p class="admin-save-msg" id="admin-save-msg"></p>
     </div>
   </div>
 
   <script>
-    /* =====================================================
-       ADMIN — identifiants fixes
-    ===================================================== */
+    const SUPA_URL = 'https://ucmrwprjwwwuhmswyipg.supabase.co';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjbXJ3cHJqd3d3dWhtc3d5aXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjQ5MDQsImV4cCI6MjA5NjUwMDkwNH0.YznRcZHs0m2hFKesA4w3NjsyCbG8l-wcvoz8rXwSbYQ';
+    const H = { 'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY };
     const ADMIN_USER = 'simonlesomonn';
     const ADMIN_PASS = 'Epique77240?';
 
-    /* =====================================================
-       PRODUITS — modifie ici
-    ===================================================== */
-    let products = [
-      { name: "Crunchyroll", img: "https://logos-world.net/wp-content/uploads/2021/02/Crunchyroll-Logo-2012-present.jpg", status: "stock", desc: "Accès streaming anime illimité.", qty: 10 },
-      { name: "Deezer", img: "https://mma.prnewswire.com/media/2269448/Deezer_Logo.jpg?p=facebook", status: "stock", desc: "Musique en streaming haute qualité.", qty: 5 },
-      { name: "Duolingo", img: "https://talkfirst.vn/wp-content/uploads/2022/11/app-hoc-tieng-anh-giao-tiep-duolingo.jpg", status: "stock", desc: "Apprentissage de langues gamifié.", qty: 8 },
-      { name: "Fortnite", img: "https://th.bing.com/th/id/R.b0b1aa2de80d68870d4f609e9ad7b066?rik=HNtIWCKtmXp5CA&riu=http%3a%2f%2fwww.baltana.com%2ffiles%2fwallpapers-20%2fFortnite-Logo-Best-Wallpaper-47898.png&ehk=z4xGzZycEqO59HFCoKR2gcGQK6%2fM8opYkVbA1rjeV%2bw%3d&risl=&pid=ImgRaw&r=0", status: "stock", desc: "V-Bucks et accès Battle Pass.", qty: 3 },
-    ];
+    async function sbGet(t,p=''){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?${p}`,{headers:H});return r.json();}
+    async function sbPost(t,b){const r=await fetch(`${SUPA_URL}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(b)});return r.json();}
+    async function sbPatch(t,id,b){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(b)});return r.json();}
+    async function sbDelete(t,id){await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:H});}
 
-    /* --- UTILS --- */
-    function getAccounts() { try { return JSON.parse(localStorage.getItem('lm_accounts') || '{}'); } catch(e) { return {}; } }
-    function saveAccounts(a) { localStorage.setItem('lm_accounts', JSON.stringify(a)); }
-    function getSession() { try { return localStorage.getItem('lm_session') || null; } catch(e) { return null; } }
-    function saveSession(u) { localStorage.setItem('lm_session', u); }
-    function clearSession() { localStorage.removeItem('lm_session'); }
-    function isAdmin(u) { return u === ADMIN_USER; }
-    function loadProducts() { try { const s = localStorage.getItem('lm_products'); if (s) products = JSON.parse(s); } catch(e) {} }
-    function saveProducts() { localStorage.setItem('lm_products', JSON.stringify(products)); }
+    let products=[], currentUser=sessionStorage.getItem('lm_user')||null;
 
-    let currentUser = getSession();
-    loadProducts();
+    async function init(){ updateNav(); await loadProducts(); }
 
-    /* --- GRILLE --- */
-    function renderGrid() {
-      const grid = document.getElementById('grid');
-      grid.innerHTML = '';
-      products.forEach((p, i) => {
-        const card = document.createElement('div');
-        card.className = 'product-card' + (currentUser ? ' unlocked' : '');
-        card.onclick = () => onCardClick(i);
-        card.innerHTML = `
+    async function loadProducts(){
+      document.getElementById('grid').innerHTML='<div class="loading-bar" style="grid-column:1/-1;">Chargement...</div>';
+      try{ products=await sbGet('products','order=id.asc'); renderGrid(); }
+      catch(e){ document.getElementById('grid').innerHTML='<div class="loading-bar" style="grid-column:1/-1;color:#f08080;">Erreur de connexion.</div>'; }
+    }
+
+    function renderGrid(){
+      const grid=document.getElementById('grid'); grid.innerHTML='';
+      if(!products.length){grid.innerHTML='<div class="loading-bar" style="grid-column:1/-1;">Aucun produit.</div>';return;}
+      products.forEach(p=>{
+        const card=document.createElement('div');
+        card.className='product-card'+(currentUser?' unlocked':'');
+        const inStock=p.status==='stock'&&p.qty>0;
+        card.innerHTML=`
           <div class="product-img-wrap">
-            <img src="${p.img}" alt="${p.name}" />
+            <img src="${p.img||''}" alt="${p.name}" onerror="this.style.display='none'" />
             <div class="lock-overlay">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(200,150,255,0.8)" stroke-width="1.6">
-                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(200,150,255,0.8)" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               <span>Connexion requise</span>
             </div>
           </div>
           <div class="product-info">
             <span class="product-name">${p.name}</span>
-            <span class="badge ${p.status === 'stock' ? 'badge-stock' : 'badge-hors-stock'}">
-              ${p.status === 'stock' ? '✦ En stock' : '✕ Hors stock'}
-            </span>
+            <span class="badge ${p.status==='stock'?'badge-stock':'badge-hors-stock'}">${p.status==='stock'?'✦ En stock':'✕ Hors stock'}</span>
           </div>
-          <div style="padding:0 20px 14px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(200,150,255,0.07);padding-top:10px;">
-            <span style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:rgba(180,140,255,0.45);letter-spacing:0.1em;">Quantité disponible</span>
-            <span class="badge-qty">${p.qty !== undefined ? p.qty : '—'}</span>
+          <div class="product-footer">
+            <span class="product-price">${p.price!=null?p.price.toFixed(2)+' €':'—'}</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="badge-qty">${p.qty??'—'}</span>
+              <button class="btn-buy" ${!inStock?'disabled':''} onclick="buyProduct(event,${p.id},'${p.name.replace(/'/g,"\\'")}',${p.price??0})">${inStock?'Acheter':'Indisponible'}</button>
+            </div>
           </div>`;
         grid.appendChild(card);
       });
     }
 
-    function updateNav() {
-      if (currentUser) {
-        document.getElementById('nav-guest').style.display = 'none';
-        const navUser = document.getElementById('nav-user');
-        navUser.style.display = 'flex';
-        document.getElementById('username-display').textContent = currentUser;
-        const adminBadge = document.getElementById('admin-badge-nav');
-        const adminBtn = document.getElementById('btn-open-admin');
-        if (isAdmin(currentUser)) {
-          adminBadge.style.display = 'inline';
-          adminBtn.style.display = 'inline-block';
-        } else {
-          adminBadge.style.display = 'none';
-          adminBtn.style.display = 'none';
-        }
-      } else {
-        document.getElementById('nav-guest').style.display = 'flex';
-        document.getElementById('nav-user').style.display = 'none';
+    async function buyProduct(e,id,name,price){
+      e.stopPropagation();
+      if(!currentUser){openAuthModal('login');return;}
+      const btn=e.target; btn.disabled=true; btn.textContent='...';
+      try{
+        const res=await fetch('/api/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productId:id,productName:name,price,username:currentUser})});
+        const data=await res.json();
+        if(data.url) window.location.href=data.url;
+        else { btn.disabled=false; btn.textContent='Acheter'; alert(data.error||'Erreur'); }
+      }catch(err){ btn.disabled=false; btn.textContent='Acheter'; alert('Erreur réseau'); }
+    }
+
+    function updateNav(){
+      if(currentUser){
+        document.getElementById('nav-guest').style.display='none';
+        document.getElementById('nav-user').style.display='flex';
+        document.getElementById('username-display').textContent=currentUser;
+        const isAdm=currentUser===ADMIN_USER;
+        document.getElementById('admin-badge-nav').style.display=isAdm?'inline':'none';
+        document.getElementById('btn-open-admin').style.display=isAdm?'inline-block':'none';
+      }else{
+        document.getElementById('nav-guest').style.display='flex';
+        document.getElementById('nav-user').style.display='none';
       }
     }
 
-    /* --- MODALS --- */
-    function openAuthModal(tab) { switchTab(tab); document.getElementById('auth-modal').classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    function switchTab(tab) { 
-      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-      document.getElementById('tab-login-btn').classList.toggle('active', tab === 'login');
-      document.getElementById('tab-register-btn').classList.toggle('active', tab === 'register');
-      document.getElementById('login-msg').textContent = '';
-      document.getElementById('register-msg').textContent = '';
+    function openAuthModal(tab){switchTab(tab);document.getElementById('auth-modal').classList.add('active');}
+    function closeModal(id){document.getElementById(id).classList.remove('active');}
+    function switchTab(t){
+      ['login','register'].forEach(x=>{document.getElementById('tab-'+x).classList.toggle('active',x===t);document.getElementById('tab-'+x+'-btn').classList.toggle('active',x===t);});
+      document.getElementById('login-msg').textContent='';document.getElementById('register-msg').textContent='';
     }
 
-    /* --- LOGIN --- */
-    function doLogin() {
-      const user = document.getElementById('login-user').value.trim();
-      const pass = document.getElementById('login-pass').value;
-      const msg = document.getElementById('login-msg');
-      if (!user || !pass) { msg.className='msg error'; msg.textContent='Remplis tous les champs.'; return; }
-
-      // Vérif admin
-      if (user === ADMIN_USER) {
-        if (pass !== ADMIN_PASS) { msg.className='msg error'; msg.textContent='Mot de passe incorrect.'; return; }
-        currentUser = user; saveSession(user);
-        msg.className='msg success'; msg.textContent='Connexion admin réussie !';
-        setTimeout(() => { closeModal('auth-modal'); updateNav(); renderGrid(); }, 700);
-        return;
+    async function doLogin(){
+      const user=document.getElementById('login-user').value.trim(),pass=document.getElementById('login-pass').value,msg=document.getElementById('login-msg');
+      if(!user||!pass){msg.className='msg error';msg.textContent='Remplis tous les champs.';return;}
+      if(user===ADMIN_USER){
+        if(pass!==ADMIN_PASS){msg.className='msg error';msg.textContent='Mot de passe incorrect.';return;}
+        sessionStorage.setItem('lm_user',user);currentUser=user;
+        msg.className='msg success';msg.textContent='Connexion admin !';
+        setTimeout(()=>{closeModal('auth-modal');updateNav();renderGrid();},700);return;
       }
-
-      const accounts = getAccounts();
-      if (!accounts[user]) { msg.className='msg error'; msg.textContent='Compte introuvable.'; return; }
-      if (accounts[user] !== pass) { msg.className='msg error'; msg.textContent='Mot de passe incorrect.'; return; }
-      currentUser = user; saveSession(user);
-      msg.className='msg success'; msg.textContent='Connexion réussie !';
-      setTimeout(() => { closeModal('auth-modal'); updateNav(); renderGrid(); }, 700);
+      try{
+        const rows=await sbGet('accounts',`username=eq.${encodeURIComponent(user)}&select=username,password`);
+        if(!rows.length){msg.className='msg error';msg.textContent='Compte introuvable.';return;}
+        if(rows[0].password!==pass){msg.className='msg error';msg.textContent='Mot de passe incorrect.';return;}
+        sessionStorage.setItem('lm_user',user);currentUser=user;
+        msg.className='msg success';msg.textContent='Connexion réussie !';
+        setTimeout(()=>{closeModal('auth-modal');updateNav();renderGrid();},700);
+      }catch(e){msg.className='msg error';msg.textContent='Erreur réseau.';}
     }
 
-    /* --- REGISTER --- */
-    function doRegister() {
-      const user = document.getElementById('reg-user').value.trim();
-      const pass = document.getElementById('reg-pass').value;
-      const pass2 = document.getElementById('reg-pass2').value;
-      const msg = document.getElementById('register-msg');
-      if (!user || !pass || !pass2) { msg.className='msg error'; msg.textContent='Remplis tous les champs.'; return; }
-      if (user === ADMIN_USER) { msg.className='msg error'; msg.textContent='Ce nom est réservé.'; return; }
-      if (pass !== pass2) { msg.className='msg error'; msg.textContent='Les mots de passe ne correspondent pas.'; return; }
-      if (pass.length < 4) { msg.className='msg error'; msg.textContent='Mot de passe trop court (min. 4 caractères).'; return; }
-      const accounts = getAccounts();
-      if (accounts[user]) { msg.className='msg error'; msg.textContent='Ce pseudo est déjà pris.'; return; }
-      accounts[user] = pass; saveAccounts(accounts);
-      currentUser = user; saveSession(user);
-      msg.className='msg success'; msg.textContent='Compte créé avec succès !';
-      setTimeout(() => { closeModal('auth-modal'); updateNav(); renderGrid(); }, 700);
+    async function doRegister(){
+      const user=document.getElementById('reg-user').value.trim(),pass=document.getElementById('reg-pass').value,pass2=document.getElementById('reg-pass2').value,msg=document.getElementById('register-msg');
+      if(!user||!pass||!pass2){msg.className='msg error';msg.textContent='Remplis tous les champs.';return;}
+      if(user===ADMIN_USER){msg.className='msg error';msg.textContent='Nom réservé.';return;}
+      if(pass!==pass2){msg.className='msg error';msg.textContent='Mots de passe différents.';return;}
+      if(pass.length<4){msg.className='msg error';msg.textContent='Mot de passe trop court.';return;}
+      try{
+        const ex=await sbGet('accounts',`username=eq.${encodeURIComponent(user)}`);
+        if(ex.length){msg.className='msg error';msg.textContent='Pseudo déjà pris.';return;}
+        await sbPost('accounts',{username:user,password:pass});
+        sessionStorage.setItem('lm_user',user);currentUser=user;
+        msg.className='msg success';msg.textContent='Compte créé !';
+        setTimeout(()=>{closeModal('auth-modal');updateNav();renderGrid();},700);
+      }catch(e){msg.className='msg error';msg.textContent='Erreur réseau.';}
     }
 
-    /* --- LOGOUT --- */
-    function logout() { currentUser = null; clearSession(); updateNav(); renderGrid(); }
+    function logout(){currentUser=null;sessionStorage.removeItem('lm_user');updateNav();renderGrid();}
 
-    /* --- CLIC CARTE --- */
-    function onCardClick(i) {
-      if (!currentUser) { openAuthModal('login'); return; }
-      const p = products[i];
-      document.getElementById('pm-img').src = p.img;
-      document.getElementById('pm-img').alt = p.name;
-      document.getElementById('pm-name').textContent = p.name;
-      document.getElementById('pm-status').innerHTML = `<span class="badge ${p.status === 'stock' ? 'badge-stock' : 'badge-hors-stock'}">${p.status === 'stock' ? '✦ En stock' : '✕ Hors stock'}</span>`;
-      document.getElementById('pm-desc').textContent = p.desc || '';
-      document.getElementById('pm-qty').textContent = p.qty !== undefined ? p.qty + ' disponible(s)' : '';
-      document.getElementById('product-modal').classList.add('active');
-    }
-
-    /* --- ADMIN PANEL --- */
-    function openAdminPanel() {
-      renderAdminProducts();
-      renderAdminUsers();
-      document.getElementById('admin-save-msg').textContent = '';
+    async function openAdminPanel(){
+      document.getElementById('admin-save-msg').textContent='';
+      await renderAdminProducts(); await renderAdminUsers();
       document.getElementById('admin-modal').classList.add('active');
     }
 
-    function renderAdminProducts() {
-      const list = document.getElementById('admin-products-list');
-      list.innerHTML = '';
-      products.forEach((p, i) => {
-        const row = document.createElement('div');
-        row.className = 'admin-product-row';
-        row.innerHTML = `
-          <img class="admin-product-thumb" src="${p.img}" alt="${p.name}" />
-          <span class="admin-product-name">${p.name}</span>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-            <input type="number" min="0" value="${p.qty !== undefined ? p.qty : 0}"
-              style="width:64px;background:rgba(255,255,255,0.06);border:1px solid rgba(200,150,255,0.2);border-radius:8px;padding:5px 8px;color:rgba(220,190,255,0.9);font-family:'Cormorant Garamond',serif;font-size:0.95rem;outline:none;text-align:center;"
-              oninput="updateQty(${i}, this.value)" title="Quantité en stock" />
-            <button class="toggle-btn ${p.status === 'stock' ? 'is-stock' : 'is-hors'}" onclick="toggleStatus(${i})">
-              ${p.status === 'stock' ? 'Hors stock' : 'En stock'}
-            </button>
-            <button class="btn-delete-user" onclick="deleteProduct(${i})">Suppr.</button>
+    async function renderAdminProducts(){
+      const list=document.getElementById('admin-products-list');
+      list.innerHTML='<div class="loading-bar">Chargement...</div>';
+      const rows=await sbGet('products','order=id.asc');
+      list.innerHTML='';
+      for(const p of rows){
+        const codes=await sbGet('codes',`product_id=eq.${p.id}&order=id.asc&select=id,code,used`);
+        const row=document.createElement('div');
+        row.style.cssText='background:rgba(255,255,255,0.02);border:1px solid rgba(200,150,255,0.1);border-radius:14px;padding:14px 16px;margin-bottom:14px;';
+        row.innerHTML=`
+          <div class="admin-product-row" style="background:none;border:none;padding:0;margin-bottom:10px;">
+            <img class="admin-product-thumb" src="${p.img||''}" alt="${p.name}" onerror="this.style.display='none'" />
+            <span class="admin-product-name">${p.name}</span>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <input type="number" min="0" value="${p.qty??0}" class="admin-input" style="width:56px;" onchange="updateQty(${p.id},this.value)" title="Quantité" />
+              <input type="number" min="0" step="0.01" value="${p.price??0}" class="admin-input" style="width:70px;" onchange="updatePrice(${p.id},this.value)" title="Prix €" placeholder="Prix" />
+              <button class="toggle-btn ${p.status==='stock'?'is-stock':'is-hors'}" onclick="toggleStatus(${p.id},'${p.status}')">${p.status==='stock'?'Hors stock':'En stock'}</button>
+              <button class="btn-delete-user" onclick="deleteProduct(${p.id})">Suppr.</button>
+            </div>
+          </div>
+          <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:rgba(255,180,0,0.5);margin-bottom:8px;">CODES (${codes.filter(c=>!c.used).length} disponibles / ${codes.length} total)</div>
+          <div class="codes-list" id="codes-${p.id}">
+            ${codes.map(c=>`
+              <div class="code-row">
+                <input value="${c.code}" readonly style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(200,150,255,${c.used?'0.08':'0.18'});border-radius:8px;padding:6px 10px;color:rgba(220,190,255,${c.used?'0.3':'0.85'});font-family:'Courier New',monospace;font-size:0.85rem;outline:none;" />
+                <span class="code-used">${c.used?'✕ utilisé':'✓ dispo'}</span>
+                ${!c.used?`<button class="btn-delete-user" style="padding:3px 8px;" onclick="deleteCode(${c.id},${p.id})">✕</button>`:''}
+              </div>`).join('')}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <input type="text" id="newcode-${p.id}" placeholder="Nouveau code..." style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(200,150,255,0.2);border-radius:8px;padding:7px 10px;color:rgba(220,190,255,0.9);font-family:'Courier New',monospace;font-size:0.85rem;outline:none;" />
+            <button class="btn-add-code" onclick="addCode(${p.id})">+ Ajouter</button>
           </div>`;
         list.appendChild(row);
-      });
-    }
-
-    function toggleStatus(i) {
-      products[i].status = products[i].status === 'stock' ? 'hors-stock' : 'stock';
-      saveProducts(); renderGrid(); renderAdminProducts();
-      flashSaveMsg('Statut mis à jour ✓');
-    }
-
-    function updateQty(i, val) {
-      const n = parseInt(val);
-      products[i].qty = isNaN(n) ? 0 : Math.max(0, n);
-      saveProducts(); renderGrid();
-      flashSaveMsg('Quantité mise à jour ✓');
-    }
-
-    function deleteProduct(i) {
-      products.splice(i, 1);
-      saveProducts(); renderGrid(); renderAdminProducts();
-      flashSaveMsg('Produit supprimé ✓');
-    }
-
-    function addProduct() {
-      const name = document.getElementById('new-name').value.trim();
-      const img = document.getElementById('new-img').value.trim();
-      const desc = document.getElementById('new-desc').value.trim();
-      const status = document.getElementById('new-status').value;
-      if (!name) { flashSaveMsg('Le nom est obligatoire.', true); return; }
-      const qty = parseInt(document.getElementById('new-qty').value) || 0;
-      products.push({ name, img: img || '', status, desc, qty });
-      saveProducts(); renderGrid(); renderAdminProducts();
-      document.getElementById('new-name').value = '';
-      document.getElementById('new-img').value = '';
-      document.getElementById('new-desc').value = '';
-      document.getElementById('new-qty').value = '';
-      flashSaveMsg('Produit ajouté ✓');
-    }
-
-    function renderAdminUsers() {
-      const list = document.getElementById('admin-users-list');
-      const accounts = getAccounts();
-      const keys = Object.keys(accounts);
-      list.innerHTML = '';
-      if (keys.length === 0) {
-        list.innerHTML = '<div class="no-users">Aucun compte utilisateur enregistré.</div>';
-        return;
       }
-      keys.forEach(u => {
-        const row = document.createElement('div');
-        row.className = 'user-row';
-        row.innerHTML = `<span class="user-row-name">👤 ${u}</span><button class="btn-delete-user" onclick="deleteUser('${u}')">Supprimer</button>`;
+    }
+
+    async function addCode(productId){
+      const input=document.getElementById(`newcode-${productId}`);
+      const code=input.value.trim();
+      if(!code){flashSaveMsg('Code vide.',true);return;}
+      await sbPost('codes',{product_id:productId,code,used:false});
+      input.value='';
+      await renderAdminProducts();
+      flashSaveMsg('Code ajouté ✓');
+    }
+
+    async function deleteCode(codeId,productId){
+      await sbDelete('codes',codeId);
+      await renderAdminProducts();
+      flashSaveMsg('Code supprimé ✓');
+    }
+
+    async function toggleStatus(id,current){
+      await sbPatch('products',id,{status:current==='stock'?'hors-stock':'stock'});
+      await loadProducts(); await renderAdminProducts(); flashSaveMsg('Statut mis à jour ✓');
+    }
+    async function updateQty(id,val){
+      await sbPatch('products',id,{qty:Math.max(0,parseInt(val)||0)});
+      await loadProducts(); flashSaveMsg('Quantité mise à jour ✓');
+    }
+    async function updatePrice(id,val){
+      await sbPatch('products',id,{price:parseFloat(val)||0});
+      await loadProducts(); flashSaveMsg('Prix mis à jour ✓');
+    }
+    async function deleteProduct(id){
+      await sbDelete('products',id); await loadProducts(); await renderAdminProducts(); flashSaveMsg('Produit supprimé ✓');
+    }
+    async function addProduct(){
+      const name=document.getElementById('new-name').value.trim();
+      const img=document.getElementById('new-img').value.trim();
+      const desc=document.getElementById('new-desc').value.trim();
+      const status=document.getElementById('new-status').value;
+      const price=parseFloat(document.getElementById('new-price').value)||0;
+      if(!name){flashSaveMsg('Le nom est obligatoire.',true);return;}
+      await sbPost('products',{name,img,description:desc,status,qty:0,price});
+      ['new-name','new-img','new-desc','new-price'].forEach(id=>document.getElementById(id).value='');
+      await loadProducts(); await renderAdminProducts(); flashSaveMsg('Produit ajouté ✓');
+    }
+
+    async function renderAdminUsers(){
+      const list=document.getElementById('admin-users-list');
+      list.innerHTML='<div class="loading-bar">Chargement...</div>';
+      const rows=await sbGet('accounts','select=id,username&order=id.asc');
+      list.innerHTML='';
+      if(!rows.length){list.innerHTML='<div class="no-users">Aucun compte.</div>';return;}
+      rows.forEach(u=>{
+        const row=document.createElement('div'); row.className='user-row';
+        row.innerHTML=`<span class="user-row-name">👤 ${u.username}</span><button class="btn-delete-user" onclick="deleteUser(${u.id},'${u.username}')">Supprimer</button>`;
         list.appendChild(row);
       });
     }
-
-    function deleteUser(u) {
-      const accounts = getAccounts();
-      delete accounts[u]; saveAccounts(accounts);
-      if (currentUser === u) logout();
-      renderAdminUsers();
-      flashSaveMsg('Utilisateur supprimé ✓');
+    async function deleteUser(id,username){
+      await sbDelete('accounts',id);
+      if(currentUser===username)logout();
+      await renderAdminUsers(); flashSaveMsg('Utilisateur supprimé ✓');
     }
 
-    function flashSaveMsg(txt, isErr) {
-      const el = document.getElementById('admin-save-msg');
-      el.style.color = isErr ? '#f08080' : '#6ee89b';
-      el.textContent = txt;
-      setTimeout(() => { el.textContent = ''; }, 2500);
+    function flashSaveMsg(txt,isErr){
+      const el=document.getElementById('admin-save-msg');
+      el.style.color=isErr?'#f08080':'#6ee89b'; el.textContent=txt;
+      setTimeout(()=>el.textContent='',2500);
     }
 
-    /* --- FERMER EN CLIQUANT DEHORS --- */
-    document.querySelectorAll('.modal-overlay').forEach(o => {
-      o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
-    });
+    document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');}));
+    document.addEventListener('keydown',e=>{if(e.key!=='Enter'||!document.getElementById('auth-modal').classList.contains('active'))return;document.getElementById('tab-login').classList.contains('active')?doLogin():doRegister();});
 
-    /* --- ENTER --- */
-    document.addEventListener('keydown', e => {
-      if (e.key !== 'Enter') return;
-      if (!document.getElementById('auth-modal').classList.contains('active')) return;
-      if (document.getElementById('tab-login').classList.contains('active')) doLogin();
-      else doRegister();
-    });
+    const cont=document.getElementById('particles');
+    for(let i=0;i<28;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*14+10}s;animation-delay:${Math.random()*15}s;opacity:${Math.random()*0.5+0.2};`;cont.appendChild(p);}
 
-    /* --- PARTICULES --- */
-    const cont = document.getElementById('particles');
-    for (let i = 0; i < 28; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const s = Math.random() * 3 + 1;
-      p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*14+10}s;animation-delay:${Math.random()*15}s;opacity:${Math.random()*0.5+0.2};`;
-      cont.appendChild(p);
-    }
-
-    /* --- INIT --- */
-    updateNav();
-    renderGrid();
+    init();
   </script>
 </body>
 </html>
